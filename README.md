@@ -56,7 +56,7 @@ manage their wishlist, and place orders.
 ## ⚙️ Installation
 
 ``` bash
-git clone https://github.com/yourusername/Fashion-Fit-Flick.git
+git clone https://github.com/developervasu6/Fashion-Fit-Flick.git
 cd Fashion-Fit-Flick
 ```
 
@@ -89,11 +89,6 @@ cd ../client
 npm start
 ```
 
-## 📸 Screenshots
-
-Add screenshots of: - Home Page - Products - Product Details - Cart -
-Wishlist - Checkout - Admin Dashboard
-
 ## 🎯 Future Improvements
 
 -   Online Payments
@@ -105,4 +100,4 @@ Wishlist - Checkout - Admin Dashboard
 
 ## 👨‍💻 Author
 
-**Pankaj**
+**VASU**
