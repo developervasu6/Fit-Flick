@@ -1,0 +1,102 @@
+/* Base Styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+
+
+
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f6f8;
+  color: #333;
+  line-height: 1.6;
+}
+
+
+.privacy-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+.breadcrumb{
+text-align:center;
+color:#777;
+margin-bottom:40px;
+}
+.breadcrumb a {
+  color: #777;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+/* Headings */
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  color: #1a1a1a;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-top: 40px;
+  margin-bottom: 15px;
+  color: #1a1a1a;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 5px;
+}
+
+/* Paragraphs & Lists */
+p, li {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+ul {
+  margin-left: 25px;
+  list-style-type: disc;
+}
+
+/* Horizontal Rule */
+hr {
+  margin: 50px 0;
+  border: 0;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Footer */
+.copyright {
+  margin-top: 40px;
+  text-align: center;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+  }
+  .privacy-container {
+    padding: 40px 15px;
+  }
+}
+
+/* Small Devices */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+  h2 {
+    font-size: 1.1rem;
+  }
+  p, li {
+    font-size: 0.95rem;
+  }
+}

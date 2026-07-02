@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: white;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .product-image {
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .wishlist-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: white;
+            border-radius: 50%;
+            padding: 6px 9px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .wishlist-btn:hover {
+            transform: scale(1.1);
+            opacity: 0.8;
+        }
+
+        .product-info {
+            padding: 12px 15px;
+        }
+
+        .title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .price {
+            margin-bottom: 10px;
+        }
+
+        .new {
+            color: #e53935;
+            font-weight: 600;
+        }
+
+        .old {
+            color: #888;
+            text-decoration: line-through;
+            margin-left: 6px;
+            font-size: 14px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid black;
+            background: black;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background: white;
+            color: black;
+        }
+
+        /* Mobile */
+        @media (max-width: 480px) {
+            .product-image img {
+                height: 220px;
+            }
+
+            .title {
+                font-size: 14px;
+            }
+        }
+
+        /* Tablet */
+        @media (min-width: 481px) and (max-width: 900px) {
+            .product-image img {
+                height: 260px;
+            }
+        }
+
+        /* Large screens */
+        @media (min-width: 1200px) {
+            .container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>WISHLIST</h1>
+
+    <div class="container">
+
+        <% if (wishlistItems.length === 0) { %>
+          <p style="text-align:center;">Your wishlist is empty</p>
+        <% } %>
+      
+        <% wishlistItems.forEach((item) => { %>
+          <div class="product-card">
+      
+            <div class="product-image">
+              <img src="<%= item.product.images[0]?.picURL || '' %>" alt="<%= item.product.name %>">
+              <div class="wishlist-btn">❤️</div>
+            </div>
+      
+            <div class="product-info">
+              <h3 class="title"><%= item.product.name %></h3>
+      
+              <div class="price">
+                <span class="new">₹<%= item.product.price %></span>
+              </div>
+      
+              <button 
+                class="btn" 
+                onclick="removeItem('<%= item._id %>', this)"
+              >
+                Remove
+              </button>
+      
+              <button class="btn" onclick="addToCart('<%= item.product._id %>', '<%= item.product.size[0] %>')">Add to Cart</button>
+            </div>
+      
+          </div>
+        <% }) %>
+      
+      </div>
+
+</body>
+<script>
+  // ── Add to Cart ─────────────────────────────
+  async function addToCart(productId, size) {
+    try {
+      const payload = {
+        productId: productId,
+        quantity: 1,
+        size
+      };
+
+      const res = await fetch("/api/shop/cart/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify(payload)
+      });
+
+      if (res.status === 401) {
+        window.location.href = "/login";
+        return;
+      }
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message);
+
+      showToast("Added to cart");
+    } catch (err) {
+      console.error(err);
+      showToast("Could not add to cart");
+    }
+  }
+
+
+  // ── Remove from Wishlist ─────────────────────
+  async function removeItem(wishlistId, btn) {
+    try {
+      const res = await fetch(`/api/shop/wishlist/remove/${wishlistId}`, {
+        method: "DELETE",
+        credentials: "include"
+      });
+
+      if (res.status === 401) {
+        window.location.href = "/login";
+        return;
+      }
+
+      if (!res.ok) throw new Error("Failed to remove");
+
+      // Remove card from UI
+      const card = btn.closest(".product-card");
+      card.remove();
+
+      showToast("Removed from wishlist");
+
+      // Optional: if empty, show message
+      if (document.querySelectorAll(".product-card").length === 0) {
+        document.querySelector(".container").innerHTML =
+          "<p style='text-align:center;'>Your wishlist is empty</p>";
+      }
+
+    } catch (err) {
+      console.error(err);
+      showToast("Could not remove item");
+    }
+  }
+
+
+  // ── Toast ───────────────────────────────────
+  let toastTimer;
+
+  function showToast(msg) {
+    let toast = document.getElementById("toast");
+
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.id = "toast";
+      toast.style.position = "fixed";
+      toast.style.bottom = "20px";
+      toast.style.left = "50%";
+      toast.style.transform = "translateX(-50%)";
+      toast.style.background = "black";
+      toast.style.color = "white";
+      toast.style.padding = "10px 20px";
+      toast.style.borderRadius = "20px";
+      toast.style.fontSize = "14px";
+      toast.style.zIndex = "999";
+      document.body.appendChild(toast);
+    }
+
+    toast.textContent = msg;
+    toast.style.opacity = "1";
+
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toast.style.opacity = "0";
+    }, 2500);
+  }
+</script>
+</html>

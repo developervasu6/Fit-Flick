@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FIT-FLICK | Customers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/shared.css" />
+</head>
+
+<body>
+  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2>FIT-FLICK</h2>
+      <button class="close-btn" onclick="closeSidebar()">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+    <ul>
+      <li>
+        <a href="/admin"><i class="fa fa-home"></i> Dashboard</a>
+      </li>
+      
+      <li>
+        <a href="/admin/products"><i class="fa fa-tshirt"></i> Products</a>
+      </li>
+      <li>
+        <a href="/admin/orders"><i class="fa fa-box"></i> Orders</a>
+      </li>
+      <li>
+        <a href="/admin/customers"><i class="fa fa-users"></i> Customers</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" onclick="openSidebar()">
+          <i class="fa fa-bars"></i>
+        </button>
+        <input type="text" placeholder="Search customers..." id="searchInput" oninput="filterCustomers()" />
+      </div>
+      <a href="/admin" class="profile-link">
+        <div class="profile-icon"><i class="fa fa-user"></i></div>
+        <span class="profile-name">Admin</span>
+      </a>
+    </div>
+
+    <div class="page-title">
+      <h1>Customers</h1>
+      <p>Manage your customer base</p>
+    </div>
+
+    <!-- Cards -->
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon" style="background: rgba(17, 17, 17, 0.08); color: #111">
+          <i class="fa fa-users"></i>
+        </div>
+        <div>
+          <h3>
+            <%= totalUsers %>
+          </h3>
+          <p>Total Customers</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon" style="background: rgba(40, 167, 69, 0.12); color: #28a745">
+          <i class="fa fa-user-plus"></i>
+        </div>
+        <div>
+          <h3>
+            <%= newThisMonth %>
+          </h3>
+          <p>New This Month</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Customer Cards Grid -->
+    <div class="customer-grid" id="customerGrid">
+      <% users.forEach(u=> { %>
+        <div class="cust-card" data-status="Active">
+          <div class="cust-card-top">
+
+            <!-- Avatar: first letter of name -->
+            <div class="cust-big-avatar" style="background:#111;">
+              <%= u.firstname.charAt(0).toUpperCase() %>
+                <%= u.lastname.charAt(0).toUpperCase() %>
+            </div>
+
+            <div>
+              <h4>
+                <%= u.firstname %>
+              </h4>
+              <p>
+                <%= u.email %>
+              </p>
+            </div>
+
+            <span class="status active" style="margin-left:auto;">Active</span>
+          </div>
+
+          <div class="cust-card-info">
+            <div class="cust-info-item">
+              <i class="fa fa-calendar"></i>
+              Joined <%= new Date(u.createdAt).toLocaleDateString('en-IN', { month: 'short' , year: 'numeric' }) %>
+            </div>
+            <div class="cust-info-item">
+              <i class="fa fa-phone"></i>
+              <%= u.phone || 'N/A' %>
+            </div>
+          </div>
+
+          <div class="cust-card-actions">
+            <button class="action-btn delete" onclick="deleteUser('<%= u._id %>')">Remove</button>
+          </div>
+        </div>
+        <% }) %>
+    </div>
+
+    <style>
+      .filters-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .filter-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .filter-group select {
+        padding: 9px 14px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 13px;
+        font-family: "Poppins", sans-serif;
+        outline: none;
+        background: white;
+        cursor: pointer;
+      }
+
+      .customer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+      }
+
+      .cust-card {
+        background: white;
+        border-radius: 14px;
+        padding: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        transition: 0.2s;
+      }
+
+      .cust-card:hover {
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .cust-card-top {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .cust-big-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .cust-card-top h4 {
+        font-size: 14px;
+        font-weight: 600;
+        color: #111;
+        margin-bottom: 2px;
+      }
+
+      .cust-card-top p {
+        font-size: 12px;
+        color: #6c757d;
+      }
+
+      .cust-card-info {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+
+      .cust-info-item {
+        font-size: 12px;
+        color: #6c757d;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .cust-info-item i {
+        color: #111;
+        font-size: 11px;
+        width: 12px;
+      }
+
+      .cust-card-actions {
+        display: flex;
+        gap: 6px;
+        padding-top: 12px;
+        border-top: 1px solid #eee;
+      }
+    </style>
+
+    <script src="/shared.js"></script>
+    <script>
+      function filterCustomers() {
+        const search = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+        const status = document.getElementById("statusFilter").value;
+        const city = document.getElementById("cityFilter").value;
+        document.querySelectorAll(".cust-card").forEach((card) => {
+          const text = card.textContent.toLowerCase();
+          const cardStatus = card.dataset.status || "";
+          const cardCity = card.dataset.city || "";
+          const matchSearch = !search || text.includes(search);
+          const matchStatus = !status || cardStatus === status;
+          const matchCity = !city || cardCity === city;
+          card.style.display =
+            matchSearch && matchStatus && matchCity ? "" : "none";
+        });
+      }
+    </script>
+</body>
+
+</html>

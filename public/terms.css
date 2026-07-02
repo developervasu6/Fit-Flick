@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins', sans-serif;
+}
+
+body{
+background:#f8f8f8;
+color:#222;
+line-height:1.7;
+}
+
+
+/* Container */
+
+.terms-container{
+max-width:900px;
+margin:auto;
+padding:40px 15px;
+}
+
+
+/* Heading */
+
+.terms-container h1{
+text-align:center;
+font-size:36px;
+margin-bottom:10px;
+}
+
+
+/* Breadcrumb */
+
+.breadcrumb{
+text-align:center;
+color:#777;
+margin-bottom:40px;
+font-size:14px;
+}
+
+.breadcrumb a{
+text-decoration:none;
+color:#555;
+}
+
+
+/* Content */
+
+.terms-content{
+
+padding:40px;
+border-radius:8px;
+
+}
+
+
+/* Paragraph */
+
+.terms-content p{
+margin-bottom:18px;
+color:#444;
+}
+
+
+/* Section Titles */
+
+.terms-content h2{
+margin-top:30px;
+margin-bottom:10px;
+font-size:22px;
+}
+
+
+/* Lists */
+
+.terms-content ul{
+margin-left:20px;
+margin-bottom:20px;
+}
+
+.terms-content li{
+margin-bottom:8px;
+}
+
+
+/* Responsive */
+
+@media(max-width:768px){
+
+.terms-container h1{
+font-size:28px;
+}
+
+.terms-content{
+padding:25px;
+}
+
+}

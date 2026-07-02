@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FIT-FLICK | Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/shared.css" />
+</head>
+
+<body>
+  <!-- Overlay for mobile -->
+  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2><a href="/">FIT-FLICK</a></h2>
+      <button class="close-btn" onclick="closeSidebar()">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+    <ul>
+      <li>
+        <a href="/admin"><i class="fa fa-home"></i> Dashboard</a>
+      </li>
+      
+      <li>
+        <a href="/admin/products"><i class="fa fa-tshirt"></i> Products</a>
+      </li>
+      <li>
+        <a href="/admin/orders"><i class="fa fa-box"></i> Orders</a>
+      </li>
+      <li>
+        <a href="/admin/customers"><i class="fa fa-users"></i> Customers</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" onclick="openSidebar()">
+          <i class="fa fa-bars"></i>
+        </button>
+        <input type="text" placeholder="Search products..." />
+      </div>
+      <a href="/profile" class="profile-link">
+        <div class="profile-icon">
+          <i class="fa fa-user"></i>
+        </div>
+        <span class="profile-name">Admin</span>
+      </a>
+    </div>
+
+    <div class="page-title">
+      <h1>Dashboard</h1>
+      <p>Welcome back, Admin 👋</p>
+    </div>
+
+    <!-- Cards -->
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon" style="background: rgba(40, 167, 69, 0.12); color: #28a745">
+          <i class="fa fa-indian-rupee-sign"></i>
+        </div>
+        <div>
+          <h3>₹<%= totalRevenue.toLocaleString('en-IN') %>
+          </h3>
+
+          <p>Total Revenue</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: rgba(17, 17, 17, 0.08); color: #111">
+          <i class="fa fa-box"></i>
+        </div>
+        <div>
+          <h3>
+            <%= totalOrders %>
+          </h3>
+          <p>Orders</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: rgba(13, 110, 253, 0.1); color: #0d6efd">
+          <i class="fa fa-tshirt"></i>
+        </div>
+        <div>
+          <h3>
+            <%= totalProducts %>
+          </h3>
+          <p>Products</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Nav Tiles -->
+
+
+    <div class="quick-nav">
+      
+      <a href="/admin/customers" class="qnav-tile">
+        <i class="fa fa-users"></i>
+        <span>Customers</span>
+      </a>
+      <a href="/admin/products" class="qnav-tile">
+        <i class="fa fa-tshirt"></i>
+        <span>Products</span>
+      </a>
+      <a href="/create-product" class="qnav-tile">
+        <i class="fa-solid fa-plus"></i>
+        <span>Create Product</span>
+      </a>
+      <a href="/create-category" class="qnav-tile">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>Create Category</span>
+      </a>
+    </div>
+  </div>
+
+  <script src="shared.js"></script>
+</body>
+
+</html>

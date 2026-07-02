@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account</title>
+
+    <link rel="stylesheet" href="signup.css">
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+
+        <div class="signup-card">
+
+            <h1>Create Account</h1>
+            <p class="subtitle">Create your account to get started</p>
+            <div class="breadcrumb">
+                <a href="/">Home</a> › Sign Up
+            </div>
+
+            <form action="/api/auth/signup" method="POST">
+
+                <div class="input-group">
+                    <input type="text" name="firstname" required>
+                    <label>First Name</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" name="lastname" required>
+                    <label>Last Name</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="email" name="email" required>
+                    <label>Email Address</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" name="password" required>
+                    <label>Password</label>
+                </div>
+
+                <button class="signup-btn">Create Account</button>
+
+                <p class="login-link">
+                    Already have an account? <a href="/login">Login</a>
+                </p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

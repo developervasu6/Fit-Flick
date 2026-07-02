@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FIT-FLICK | Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="/shared.css" />
+</head>
+
+<body>
+
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><a href="/">FIT-FLICK</a></h2>
+            <button class="close-btn" onclick="closeSidebar()"><i class="fa fa-times"></i></button>
+        </div>
+        <ul>
+            <li><a href="/admin"><i class="fa fa-home"></i> Dashboard</a></li>
+            <li><a href="/admin/products"><i class="fa fa-tshirt"></i> Products</a></li>
+            <li><a href="/admin/orders"><i class="fa fa-box"></i> Orders</a></li>
+            <li><a href="/admin/customers"><i class="fa fa-users"></i> Customers</a></li>
+            
+        </ul>
+    </div>
+
+    <div class="main">
+        <div class="topbar">
+            <div class="topbar-left">
+                <button class="hamburger" onclick="openSidebar()"><i class="fa fa-bars"></i></button>
+                <input type="text" placeholder="Search..." />
+            </div>
+            <a href="/profile" class="profile-link">
+                <div class="profile-icon" style="background:#333;"><i class="fa fa-user"></i></div>
+                <span class="profile-name">Admin</span>
+            </a>
+        </div>
+
+        <div class="page-title">
+            <h1>Profile</h1>
+            <p>Manage your admin account</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab(this,'profile')">Profile Info</button>
+            <button class="tab-btn" onclick="switchTab(this,'security')">Security</button>
+            
+        </div>
+
+        <!-- Tab: Profile Info -->
+        <div class="tab-content active" id="tab-profile">
+            <div class="profile-wrapper">
+
+                <!-- Left card -->
+                <div class="profile-card">
+                    <div class="profile-avatar"><i class="fa fa-user"></i></div>
+                    <h3>Admin User</h3>
+                    <p>admin@fitflick.com</p>
+                    <span class="profile-badge">Super Admin</span>
+                    <div class="profile-stats">
+                        <div class="pstat">
+                            <h4>320</h4>
+                            <p>Orders</p>
+                        </div>
+                        <div class="pstat">
+                            <h4>1.2K</h4>
+                            <p>Customers</p>
+                        </div>
+                        <div class="pstat">
+                            <h4>120</h4>
+                            <p>Products</p>
+                        </div>
+                    </div>
+                    <button class="save-btn"
+                        style="width:100%;margin-top:18px;background:#f4f6f9;color:#111;border:1px solid #ddd;">
+                        <i class="fa fa-camera"></i> Change Photo
+                    </button>
+                </div>
+
+                <!-- Right form -->
+                <div class="profile-details">
+                    <h3>Personal Information</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" value="Admin" />
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" value="User" />
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" value="admin@fitflick.com" />
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" value="+91 98765 43210" />
+                        </div>
+                        <div class="form-group">
+                            <label>Role</label>
+                            <select>
+                                <option selected>Super Admin</option>
+                                <option>Admin</option>
+                                <option>Manager</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Location</label>
+                            <input type="text" value="Mumbai, India" />
+                        </div>
+                        <div class="form-group full">
+                            <label>Bio</label>
+                            <input type="text" value="Managing FIT-FLICK clothing store operations" />
+                        </div>
+                    </div>
+                    <button class="save-btn" onclick="showToast('Profile saved successfully!')">
+                        <i class="fa fa-check"></i> Save Changes
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Tab: Security -->
+        <div class="tab-content" id="tab-security">
+            <div class="profile-wrapper">
+                <div class="profile-card">
+                    <div class="profile-avatar" style="background:#dc3545;"><i class="fa fa-shield-halved"></i></div>
+                    <h3>Account Security</h3>
+                    <p>Keep your account safe</p>
+                    <div style="margin-top:20px;text-align:left;width:100%;">
+                        <div class="security-item">
+                            <i class="fa fa-circle-check" style="color:#28a745;"></i>
+                            <div>
+                                <strong>2-Factor Auth</strong>
+                                <p>Enabled via Email</p>
+                            </div>
+                        </div>
+                        <div class="security-item">
+                            <i class="fa fa-clock" style="color:#d39e00;"></i>
+                            <div>
+                                <strong>Last Login</strong>
+                                <p>Today, 9:34 AM</p>
+                            </div>
+                        </div>
+                        <div class="security-item">
+                            <i class="fa fa-location-dot" style="color:#0d6efd;"></i>
+                            <div>
+                                <strong>Login Location</strong>
+                                <p>Mumbai, India</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-details">
+                    <h3>Change Password</h3>
+                    <div class="form-grid">
+                        <div class="form-group full">
+                            <label>Current Password</label>
+                            <input type="password" placeholder="••••••••" />
+                        </div>
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" placeholder="••••••••" />
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm New Password</label>
+                            <input type="password" placeholder="••••••••" />
+                        </div>
+                    </div>
+                    <div class="pw-rules">
+                        <p><i class="fa fa-circle-check" style="color:#28a745;"></i> At least 8 characters</p>
+                        <p><i class="fa fa-circle-check" style="color:#28a745;"></i> One uppercase letter</p>
+                        <p><i class="fa fa-circle" style="color:#ddd;"></i> One special character</p>
+                    </div>
+                    <button class="save-btn" onclick="showToast('Password updated!')">
+                        <i class="fa fa-lock"></i> Update Password
+                    </button>
+
+                    <h3 style="margin-top:28px;">Active Sessions</h3>
+                    <div class="session-list">
+                        <div class="session-item">
+                            <i class="fa fa-desktop"></i>
+                            <div>
+                                <strong>Chrome on Windows</strong>
+                                <p>Mumbai, India · Current session</p>
+                            </div>
+                            <span class="status active" style="margin-left:auto;">Active</span>
+                        </div>
+                        <div class="session-item">
+                            <i class="fa fa-mobile-screen"></i>
+                            <div>
+                                <strong>Safari on iPhone</strong>
+                                <p>Mumbai, India · 2 hours ago</p>
+                            </div>
+                            <button class="action-btn delete" style="margin-left:auto;font-size:11px;">Revoke</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Notifications -->
+        
+
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <style>
+        .tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 9px 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #6c757d;
+        }
+
+        .tab-btn.active,
+        .tab-btn:hover {
+            background: #111;
+            color: white;
+            border-color: #111;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .security-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+        }
+
+        .security-item:last-child {
+            border: none;
+        }
+
+        .security-item i {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .security-item strong {
+            display: block;
+            color: #111;
+        }
+
+        .security-item p {
+            color: #6c757d;
+            font-size: 12px;
+            margin-top: 1px;
+        }
+
+        .pw-rules {
+            margin-top: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .pw-rules p {
+            font-size: 12px;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .session-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .session-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 13px;
+        }
+
+        .session-item:last-child {
+            border-bottom: none;
+        }
+
+        .session-item i {
+            font-size: 18px;
+            color: #111;
+            width: 24px;
+            text-align: center;
+        }
+
+        .session-item strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .session-item p {
+            font-size: 11px;
+            color: #6c757d;
+        }
+
+        /* ===== Notification List ===== */
+        .notif-list {
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            overflow: hidden;
+        }
+
+        /* Each item */
+        .notif-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            
+            padding: 18px 20px;
+            border-bottom: 1px solid #f1f1f1;
+            gap: 16px;
+
+            transition: background 0.2s ease;
+        }
+
+        .notif-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Hover effect */
+        .notif-item:hover {
+            background: #f9fafb;
+        }
+
+        /* Text block */
+        .notif-item div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Title */
+        .notif-item strong {
+            font-size: 14px;
+            color: #111;
+            font-weight: 500;
+        }
+
+        /* Description */
+        .notif-item p {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 3px;
+        }
+
+        /* ===== Toggle Switch (Improved) ===== */
+        .toggle {
+            position: relative;
+            width: 46px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        /* Hide default */
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        /* Track */
+        .slider {
+            position: absolute;
+            inset: 0;
+            background: #ddd;
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+
+        /* Circle */
+        .slider::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 3px;
+            top: 3px;
+
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+
+            transition: 0.3s;
+        }
+
+        /* Active state */
+        .toggle input:checked+.slider {
+            background: #111;
+        }
+
+        .toggle input:checked+.slider::before {
+            transform: translateX(20px);
+        }
+
+        /* Focus accessibility */
+        .toggle input:focus+.slider {
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: #ddd;
+            border-radius: 24px;
+            transition: 0.3s;
+        }
+
+        .slider::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .toggle input:checked+.slider {
+            background: #111;
+        }
+
+        .toggle input:checked+.slider::before {
+            transform: translateX(20px);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #111;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: 'Poppins', sans-serif;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 9999;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+
+    <script src="shared.js"></script>
+    <script>
+        function switchTab(btn, tabId) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2500);
+        }
+    </script>
+</body>
+
+</html>

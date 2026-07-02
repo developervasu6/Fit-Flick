@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create-Category</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: white;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 500px;
+      background: #fff;
+      padding: 30px;
+      border: 1px solid #d4cfcf;
+      border-radius: 10px;
+    }
+
+    /* Heading */
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #000;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    /* Alerts */
+    .error,
+    .success {
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    /* Error = white bg, black border */
+    .error {
+      background: #ffe5e5;
+      color: #d8000c;
+      
+    }
+
+    /* Success = inverted */
+    .success {
+      background: #e6ffed;
+      color: #1e7e34;
+    }
+
+    /* Labels */
+    label {
+      display: block;
+      margin-bottom: 6px;
+      margin-top: 10px;
+      font-weight: 500;
+      color: #555;
+    }
+
+    /* Inputs */
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      color: #000;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    /* Focus effect (invert) */
+    input:focus {
+      border-color: #000;
+      box-shadow: 0 0 5px rgba(25, 25, 27, 0.4);
+    }
+
+    /* File input */
+    input[type="file"] {
+      padding: 8px;
+      color: ;
+    }
+
+    /* Button */
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      background: #000;
+      color: #fff;
+      border: 1px solid #000;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    /* Hover invert */
+    button:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+      .container {
+        padding: 20px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+    }
+  </style>
+  <style>
+    .bump{
+      text-align: center;
+    }
+    .bump a {
+      text-align: center;
+      color: #7c8083;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .bump a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <h2>Create Category</h2>
+    <div class="bump">
+      <span><a href="/admin">Dashboard</a></span>
+    </div>
+
+    <!-- Show Error -->
+    <% if(error){ %>
+      <p class="error">
+        <%= error %>
+      </p>
+      <% } %>
+
+        <!-- Show Success -->
+        <% if(message){ %>
+          <p class="success">
+            <%= message %>
+          </p>
+          <% } %>
+
+            <form action="/api/shop/create/category" method="POST" enctype="multipart/form-data">
+
+              <label>Category Title</label>
+              <input type="text" name="title" placeholder="Enter category title" required>
+
+              <label>Slug</label>
+              <input type="text" name="slug" placeholder="enter-category-slug" required>
+
+              <label>Category Image</label>
+              <input type="file" name="file" accept="image/*" required>
+
+              <button type="submit">Create Category</button>
+
+            </form>
+
+  </div>
+
+
+</body>
+
+</html>

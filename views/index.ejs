@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIT-FLICK</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        nav {
+            position: relative;
+        }
+
+        /* Search container */
+        /* Base positioning */
+        #search-bar {
+            position: absolute;
+            right: 10px;
+            top: 60px;
+            display: none;
+            z-index: 1000;
+        }
+
+        /* Input default (collapsed) */
+        #search-bar input {
+            width: 0;
+            opacity: 0;
+            padding: 10px 15px;
+            border-radius: 25px;
+            border: 1px solid #ccc;
+            outline: none;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        /* Expanded */
+        #search-bar.active input {
+            width: 260px;
+            opacity: 1;
+        }
+
+        /* 🔻 Tablet */
+        @media (max-width: 768px) {
+            #search-bar {
+                right: 10px;
+                top: 55px;
+            }
+
+            #search-bar.active input {
+                width: 180px;
+            }
+        }
+
+        /* 🔻 Mobile */
+        @media (max-width: 480px) {
+            #search-bar {
+                right: 0;
+                left: 0;
+                top: 60px;
+                padding: 0 10px;
+            }
+
+            #search-bar input {
+                width: 100% !important;
+                opacity: 1 !important;
+            }
+
+            #search-bar.active input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <header>
+            <span>FIT-FLICK</span>
+            <nav>
+                <ul>
+                    <li class="nav-icons">
+                        <a href="#search-bar">
+                            <svg class="w-[20px] h-[20px]" fill="currentColor" stroke="currentColor"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path
+                                    d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z">
+                                </path>
+                            </svg>
+                        </a>
+                    </li>
+
+                    <li class="nav-icons">
+                        <a href="/cart">
+                            <svg class="w-[20px] h-[20px]" fill="currentColor" stroke="currentColor"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path
+                                    d="M352 128C352 57.42 294.579 0 224 0 153.42 0 96 57.42 96 128H0v304c0 44.183 35.817 80 80 80h288c44.183 0 80-35.817 80-80V128h-96zM224 48c44.112 0 80 35.888 80 80H144c0-44.112 35.888-80 80-80zm176 384c0 17.645-14.355 32-32 32H80c-17.645 0-32-14.355-32-32V176h48v40c0 13.255 10.745 24 24 24s24-10.745 24-24v-40h160v40c0 13.255 10.745 24 24 24s24-10.745 24-24v-40h48v256z">
+                                </path>
+                            </svg>
+                        </a>
+                    </li>
+
+                    <li class="nav-icons">
+                        <a href="/wishlist">
+                            <svg class="w-[20px] h-[20px]" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 576 512">
+                                <path
+                                    d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6z">
+                                </path>
+                            </svg>
+                        </a>
+                    </li>
+
+                    <li class="nav-icons">
+                        <% if (user && user.role === 'admin') { %>
+                            <a href="/admin">
+                              <svg class="w-[20px] h-[20px]" fill="currentColor" stroke="currentColor"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144z"/>
+                              </svg>
+                            </a>
+                          <% } else if (user) { %>
+                              <div style="
+                                width: 28px; height: 28px;
+                                border-radius: 50%;
+                                background: #1a1a1a;
+                                color: white;
+                                display: flex; align-items: center; justify-content: center;
+                                font-size: 12px;
+                                font-weight: 700;
+                                font-family: 'DM Sans', sans-serif;
+                                letter-spacing: 0.03em;
+                              ">
+                                <%= user.name.charAt(0).toUpperCase() %>
+                              </div>
+                          <% } else { %>
+                            <a href="/login">
+                              <svg class="w-[20px] h-[20px]" fill="currentColor" stroke="currentColor"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144z"/>
+                              </svg>
+                            </a>
+                          <% } %>
+                    </li>
+                </ul>
+            </nav>
+            <div id="search-bar">
+                <input type=" text" placeholder="Search for products, brands and more">
+
+            </div>
+        </header>
+        <div class="nav-links">
+            <ul>
+                <% categories.forEach(category=> { %>
+
+                    <li><a href="/category/<%= category.slug %>"><%= category.title %></a></li>
+    
+    
+                    <% }) %>
+            </ul>
+        </div>
+        <!--! <========Hero Section =========> -->
+        <section class="slider">
+
+            <div class="slide active">
+                <a href="product1.html">
+                    <img src="assets/image/front-img1.jpeg" alt="Slide 1">
+                </a>
+            </div>
+
+            <div class="slide">
+                <a href="product2.html">
+                    <img src="assets/image/front-img2.jpeg">
+                </a>
+            </div>
+
+            <div class="slide">
+                <a href="product3.html">
+                    <img src="assets/image/front-img3.jpeg" alt="Slide 3">
+                </a>
+            </div>
+
+        </section>
+        <!-- !<========Category section =========> -->
+        <div class="category-grid">
+
+            <% categories.forEach(category=> { %>
+
+                <a href="/category/<%= category.slug %>">
+                    <div class="category">
+                        <img src="<%= category.imageURL %>" alt="<%= category.title %>">
+
+                        <div class="overlay">
+                            <%= category.title %>
+                        </div>
+                    </div>
+                </a>
+
+
+                <% }) %>
+        </div>
+        <!-- !<========Card Containner =========> -->
+        <section class="options-section">
+
+            <div class="heading">
+                <h2>You Always Need Options</h2>
+            </div>
+
+            <div class="card-container">
+
+                <div class="option-card">
+                    <a href="#">
+                        <div class="category-options">
+                            <img src="assets/image/clothes/three-cap.jpg" alt="Shirts">
+                        </div>
+                        <div class="line">
+                            <p>3 At ₹999</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="option-card">
+                    <a href="#">
+                        <div class="category-options">
+                            <img src="assets/image/clothes/three-shirt.jpg" alt="Shirts">
+                        </div>
+                        <div class="line">
+                            <p>3 At ₹999</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="option-card">
+                    <a href="#">
+                        <div class="category-options">
+                            <img src="assets/image/clothes/four-hoodie.jpg" alt="Shirts">
+                        </div>
+                        <div class="line">
+                            <p>3 At ₹999</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="option-card">
+                    <a href="#">
+                        <div class="category-options">
+                            <img src="assets/image/clothes/sweatshirts.jpg" alt="Shirts">
+                        </div>
+                        <div class="line">
+                            <p>3 At ₹999</p>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+        </section>
+        <!-- !<======Look Section ======> -->
+        <section class="look-section">
+            <h2 class="look-heading">GET THE LOOK</h2>
+            <div class="look-container">
+
+                <div class="look-item">
+                    <img src="assets/image/clothes/outfit-men.jpg" alt="">
+                    <div class="look-overlay">
+                        <button onclick="shopnow()">SHOP NOW</button>
+                    </div>
+                </div>
+
+                <div class="look-item">
+                    <img src="assets/image/clothes/outfit-men3.jpg" alt="">
+                    <div class="look-overlay">
+                        <button onclick="shopnow()">SHOP NOW</button>
+                    </div>
+                </div>
+
+                <div class="look-item">
+                    <img src="assets/image/clothes/outfit-men6.jpg" alt="">
+                    <div class="look-overlay">
+                        <button onclick="shopnow()">SHOP NOW</button>
+                    </div>
+                </div>
+
+                <div class="look-item">
+                    <img src="assets/image/clothes/outfit-men2.jpg" alt="">
+                    <div class="look-overlay">
+                        <button onclick="shopnow()">SHOP NOW</button>
+                    </div>
+                </div>
+
+                <div class="look-item">
+                    <img src="assets/image/clothes/outfit-men7.jpg" alt="">
+                    <div class="look-overlay">
+                        <button onclick="shopnow()">SHOP NOW</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+        <footer class="footer">
+
+            <div class="footer-container">
+
+                <!-- Company -->
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/aboutus">About Us</a></li>
+                        <li><a href="/sizechart">Size Chart</a></li>
+                        <li><a href="/careers">Careers</a></li>
+                        <li><a href="/returns">My Returns</a></li>
+
+                    </ul>
+                </div>
+
+                <!-- Policies -->
+                <div class="footer-col">
+                    <h3>Policies</h3>
+                    <ul>
+                        <li><a href="/privacy-policy">Privacy Policy</a></li>
+                        <li><a href="/shipping">Shipping & Returns</a></li>
+                        <li><a href="/payments">Payments & Orders</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                        <li><a href="/terms">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+
+                <!-- Get in touch -->
+                <div class="footer-col">
+                    <h3>Get in touch</h3>
+                    <p>080 6863 5857</p>
+                    <p>customerservice@fit-flick.com</p>
+
+                    <div class="social-icons">
+                        <a href="#">P</a>
+                        <a href="#">F</a>
+                        <a href="#">I</a>
+                        <a href="#">S</a>
+                        <a href="#">Y</a>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Bottom Bar -->
+            <div class="footer-bottom">
+                © 2026, Fit-Flick
+            </div>
+            <!-- <div class="builder-name">
+                Build by <a href="/">MidnightX</a>
+            </div> -->
+
+        </footer>
+
+    </main>
+
+    <script defer src="/script.js"></script>
+    <script>
+        function shopnow() {
+            alert("Shop Now clicked!");
+        }
+
+        const container = document.querySelector(".look-container");
+
+        // 🔁 clone items for seamless loop
+        const items = [...container.children];
+        items.forEach(item => {
+            const clone = item.cloneNode(true);
+            container.appendChild(clone);
+        });
+
+        let speed = 1;
+        let isPaused = false;
+
+        function infiniteScroll() {
+            if (!isPaused) {
+                container.scrollLeft += speed;
+
+                if (container.scrollLeft >= container.scrollWidth / 2) {
+                    container.scrollLeft = 0;
+                }
+            }
+            requestAnimationFrame(infiniteScroll);
+        }
+
+        // ▶️ start animation
+        infiniteScroll();
+
+        // 🖱️ hover events
+        container.addEventListener("mouseenter", () => {
+            isPaused = true;
+        });
+
+        container.addEventListener("mouseleave", () => {
+            isPaused = false;
+        });
+        const searchIcon = document.querySelector(".nav-icons a[href='#search-bar']");
+        const searchBar = document.getElementById("search-bar");
+        const searchInput = searchBar.querySelector("input");
+
+        searchIcon.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            searchBar.classList.toggle("active");
+
+            if (searchBar.classList.contains("active")) {
+                searchBar.style.display = "block";
+                setTimeout(() => searchInput.focus(), 150);
+            } else {
+                searchInput.blur();
+                setTimeout(() => {
+                    searchBar.style.display = "none";
+                }, 300);
+            }
+        });
+        searchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                console.log("Search:", searchInput.value);
+            }
+        });
+    </script>
+</body>
+
+</html>

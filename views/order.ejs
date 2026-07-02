@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FIT-FLICK | Order</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/shared.css" />
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f4f6f9;
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background: #111;
+      padding: 0 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar-brand {
+      color: white;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-decoration: none;
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .navbar-right a {
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 16px;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .navbar-right a:hover {
+      color: white;
+    }
+
+    .wrapper {
+      max-width: 860px;
+      margin: 36px auto;
+      padding: 0 16px 60px;
+    }
+
+    .page-heading {
+      margin-bottom: 24px;
+    }
+
+    .page-heading h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .page-heading p {
+      font-size: 13px;
+      color: #6c757d;
+      margin-top: 4px;
+    }
+
+    /* ORDER HERO */
+    .order-hero {
+      background: #111;
+      border-radius: 16px;
+      padding: 26px 28px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .order-hero-left h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .order-hero-left p {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .order-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      color: white;
+    }
+
+    .dot-blink {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ffc107;
+      display: inline-block;
+      animation: blink 1.4s infinite;
+    }
+
+    .dot-blink.green {
+      background: #28a745;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.3
+      }
+    }
+
+    /* CARD */
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 22px 24px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+      margin-bottom: 18px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title i {
+      color: #6c757d;
+      font-size: 13px;
+    }
+
+    /* ITEMS */
+    .item-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid #f5f5f5;
+    }
+
+    .item-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .item-img {
+      width: 64px;
+      height: 64px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .item-info {
+      flex: 1;
+    }
+
+    .item-info h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 3px;
+    }
+
+    .item-chips {
+      margin-top: 5px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .chip {
+      background: #f4f6f9;
+      color: #555;
+      border-radius: 6px;
+      padding: 2px 9px;
+      font-size: 11px;
+    }
+
+    .item-price-col {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .item-qty {
+      font-size: 12px;
+      color: #6c757d;
+    }
+
+    .item-total {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    /* PRICE SUMMARY */
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 8px 0;
+      color: #555;
+      border-bottom: 1px solid #f5f5f5;
+    }
+
+    .price-row:last-child {
+      border-bottom: none;
+    }
+
+    .price-row.grand {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111;
+      padding-top: 12px;
+    }
+
+    /* USER DETAILS */
+    .user-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .detail-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .detail-label {
+      font-size: 11px;
+      color: #6c757d;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .detail-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+    }
+
+    /* BUTTONS */
+    .actions-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    .btn-dark {
+      flex: 1;
+      padding: 12px;
+      background: #111;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      text-decoration: none;
+    }
+
+    .btn-dark:hover {
+      background: #333;
+    }
+
+    .btn-outline {
+      flex: 1;
+      padding: 12px;
+      background: white;
+      color: #111;
+      border: 1.5px solid #ddd;
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+    }
+
+    .btn-outline:hover {
+      background: #f4f6f9;
+    }
+
+    /* STATUS BADGE colours */
+    .status-placed {
+      background: rgba(13, 110, 253, 0.12);
+      color: #0d6efd;
+    }
+
+    .status-shipped {
+      background: rgba(255, 193, 7, 0.15);
+      color: #d39e00;
+    }
+
+    .status-delivered {
+      background: rgba(40, 167, 69, 0.12);
+      color: #28a745;
+    }
+
+    .status-cancelled {
+      background: rgba(220, 53, 69, 0.12);
+      color: #dc3545;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #111;
+      color: white;
+      padding: 12px 26px;
+      border-radius: 30px;
+      font-size: 13px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      z-index: 9999;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+
+    @media (max-width: 640px) {
+      .wrapper {
+        margin: 20px auto;
+      }
+
+      .user-detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .order-hero {
+        padding: 20px;
+      }
+
+      .card {
+        padding: 18px;
+      }
+
+      .navbar {
+        padding: 0 16px;
+      }
+
+      .actions-row {
+        flex-direction: column;
+      }
+
+      .btn-dark,
+      .btn-outline {
+        flex: unset;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <a href="/" class="navbar-brand">FIT-FLICK</a>
+    <div class="navbar-right">
+      <a href="/"><i class="fa fa-house"></i></a>
+      <a href="/products"><i class="fa fa-bag-shopping"></i></a>
+      <a href="/usr_profile"><i class="fa fa-user"></i></a>
+    </div>
+  </nav>
+
+  <% /* ── Helpers ── */ function fmtDate(d) { if (!d) return '—' ; return new Date(d).toLocaleDateString('en-IN', {
+    day: 'numeric' , month: 'long' , year: 'numeric' }); } const totalItems=order.products.reduce((s, p)=> s +
+    p.quantity, 0);
+
+    const statusColour = {
+    placed: 'status-placed',
+    shipped: 'status-shipped',
+    delivered: 'status-delivered',
+    cancelled: 'status-cancelled',
+    }[order.status] || 'status-placed';
+    %>
+
+    <div class="wrapper">
+
+      <div class="page-heading">
+        <h1>My Order</h1>
+        <p>Order placed on <%= fmtDate(order.createdAt) %>
+        </p>
+      </div>
+
+      <!-- ORDER HERO -->
+      <div class="order-hero">
+        <div class="order-hero-left">
+          <h2>Order ID: <%= order._id %>
+          </h2>
+          <p>
+            <i class="fa fa-calendar" style="margin-right:5px;"></i>
+            <%= fmtDate(order.createdAt) %> &nbsp;·&nbsp; <%= totalItems %> item<%= totalItems !==1 ? 's' : '' %>
+          </p>
+        </div>
+        <div class="order-hero-badge">
+          <span class="dot-blink <%= order.status === 'delivered' ? 'green' : '' %>"></span>
+          <%= order.status.charAt(0).toUpperCase() + order.status.slice(1) %>
+        </div>
+      </div>
+
+      <!-- ORDERED PRODUCTS -->
+      <div class="card">
+        <div class="card-title">
+          <i class="fa fa-bag-shopping"></i>
+          Items (<%= totalItems %>)
+        </div>
+
+        <% order.products.forEach(item=> { %>
+          <div class="item-row">
+            <img
+              src="<%= item.image || 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=120&h=120&fit=crop' %>"
+              class="item-img" alt="<%= item.name %>" />
+            <div class="item-info">
+              <h4>
+                <%= item.name %>
+              </h4>
+              <div class="item-chips">
+                <span class="chip">Size: <%= item.size.toUpperCase() %></span>
+                <span class="chip">Qty: <%= item.quantity %></span>
+                <span class="status-badge <%= statusColour %>">
+                  <%= order.status %>
+                </span>
+              </div>
+            </div>
+            <div class="item-price-col">
+              <div class="item-qty">₹<%= item.price.toLocaleString('en-IN') %> × <%= item.quantity %>
+              </div>
+              <div class="item-total">₹<%= (item.price * item.quantity).toLocaleString('en-IN') %>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+      </div>
+
+      <!-- BILL SUMMARY -->
+      <div class="card">
+        <div class="card-title"><i class="fa fa-receipt"></i> Bill Summary</div>
+
+        <% order.products.forEach(item=> { %>
+          <div class="price-row">
+            <span>
+              <%= item.name %> × <%= item.quantity %>
+            </span>
+            <span>₹<%= (item.price * item.quantity).toLocaleString('en-IN') %></span>
+          </div>
+          <% }) %>
+
+            <div class="price-row grand">
+              <span>Total Bill</span>
+              <span>₹<%= order.totalBill.toLocaleString('en-IN') %></span>
+            </div>
+      </div>
+
+      <!-- USER DETAILS -->
+      <div class="card">
+        <div class="card-title"><i class="fa fa-user"></i> Customer Details</div>
+        <div class="user-detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">Name</span>
+            <span class="detail-value">
+              <%= order.userId.firstname %>
+                <%= order.userId.lastname %>
+            </span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Email</span>
+            <span class="detail-value">
+              <%= order.userId.email %>
+            </span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Order Date</span>
+            <span class="detail-value">
+              <%= fmtDate(order.createdAt) %>
+            </span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Status</span>
+            <span class="detail-value">
+              <span class="status-badge <%= statusColour %>">
+                <%= order.status %>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BUTTONS -->
+      <div class="actions-row">
+        <button class="btn-outline" onclick="window.location.href='/'">
+          <i class="fa fa-bag-shopping"></i> Continue Shopping
+        </button>
+        <a href="/" class="btn-dark">
+          <i class="fa fa-house"></i> Go Home
+        </a>
+      </div>
+
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2500);
+      }
+    </script>
+</body>
+
+</html>

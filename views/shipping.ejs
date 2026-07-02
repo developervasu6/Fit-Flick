@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shipping & Returns</title>
+
+    <link rel="stylesheet" href="/shipping.css" />
+
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <section class="faq-container">
+      <h1>Shipping & Returns</h1>
+
+      <div class="breadcrumb"><a href="/">Home</a> › Shipping & Returns</div>
+
+      <div class="faq">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span
+              >I placed an order, however, I have not received any update
+              regarding its shipping.</span
+            >
+            <i class="fa-solid fa-chevron-down icon"></i>
+          </button>
+
+          <div class="faq-answer">
+            <p>
+              You will receive shipping updates through email or SMS once your
+              order is dispatched.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What are the shipping charges?</span>
+            <i class="fa-solid fa-chevron-down icon"></i>
+          </button>
+
+          <div class="faq-answer">
+            <p>Shipping charges depend on location and order value.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How long will it take to receive the ordered products?</span>
+            <i class="fa-solid fa-chevron-down icon"></i>
+          </button>
+
+          <div class="faq-answer">
+            <p>Orders arrive within 3-7 business days.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const questions = document.querySelectorAll(".faq-question");
+
+      questions.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const item = btn.parentElement;
+          const answer = btn.nextElementSibling;
+          const icon = btn.querySelector(".icon");
+
+          answer.classList.toggle("active");
+          icon.classList.toggle("rotate");
+        });
+      });
+    </script>
+  </body>
+</html>

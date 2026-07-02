@@ -1,0 +1,61 @@
+<% style = '<link rel="stylesheet" href="/products.css">' %>
+<div class="page">
+  <div class="page-header">
+    <h1 class="page-title"><%= category.title %></h1>
+  </div>
+
+  <div class="breadcrumb">
+    <a href="/">Home</a>
+    <span>›</span>
+    <span><%= category.title %></span>
+  </div>
+
+  <div class="toolbar">
+    <button class="filter-btn">
+      <div class="filter-icon"><span></span><span></span><span></span></div>
+      Filter
+    </button>
+    <div class="sort-wrapper">
+      <span class="sort-label">Sort by :</span>
+      <select class="sort-select">
+        <option>Featured</option>
+        <option>Price: Low to High</option>
+        <option>Price: High to Low</option>
+        <option>Newest</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="product-grid">
+    <% products.forEach(product => { %>
+      <a href="/product/<%= product._id %>" class="product-card">
+        <div class="img-wrap">
+          <img
+            class="card-img"
+            src="<%= product.images[0]?.picURL %>"
+            alt="<%= product.name %>"
+            loading="lazy"
+          />
+          <button class="wishlist-btn" onclick="event.preventDefault()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06
+                       a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78
+                       1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="card-body">
+          <p class="product-name"><%= product.name %></p>
+          <div class="price-row">
+            <span class="price-new">₹ <%= product.price.toLocaleString('en-IN') %></span>
+          </div>
+          <div class="size-row">
+            <% product.size.forEach(s => { %>
+              <span class="size-chip"><%= s %></span>
+            <% }) %>
+          </div>
+        </div>
+      </a>
+    <% }) %>
+  </div>
+</div>

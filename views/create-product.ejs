@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Product</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f0f4f8;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* FIXED: .container (not container) */
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 1px;
+            font-weight: bolder;
+            color: black;
+            text-transform: uppercase;
+        }
+
+        /* Alerts */
+        p {
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        p[style*="red"] {
+            background: #ffe5e5;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        p[style*="green"] {
+            background: #e6ffed;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        /* Labels */
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        /* Inputs */
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+            transition: 0.3s;
+            margin-bottom: 15px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: black;
+            box-shadow: 0 0 5px rgba(25, 25, 27, 0.4);
+        }
+
+        /* File input */
+        input[type="file"] {
+            padding: 8px;
+            background: #f9f9f9;
+        }
+
+        /* Checkbox group */
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 5px;
+        }
+
+        label input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .container label:has(input[type="checkbox"]) {
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            background: #f1f1f1;
+            padding: 6px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .container label:has(input[type="checkbox"]:checked) {
+            background: black;
+            color: #fff;
+        }
+
+        /* Button */
+        button {
+            width: 100%;
+            padding: 12px;
+            background: black;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+
+            border: 1px solid #000;
+        }
+
+        button:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+    <style>
+        .bump {
+            text-align: center;
+        }
+
+        .bump a {
+            text-align: center;
+            color: #7c8083;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .bump a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Create Product</h2>
+        <div class="bump">
+            <span><a href="/admin">Dashboard</a></span>
+        </div>
+
+
+        <!-- Error -->
+        <% if(error){ %>
+            <p style="color:red;">
+                <%= error %>
+            </p>
+            <% } %>
+
+                <!-- Success -->
+                <% if(message){ %>
+                    <p style="color:green;">
+                        <%= message %>
+                    </p>
+                    <% } %>
+
+                        <form action="/api/shop/create/product" method="POST" enctype="multipart/form-data">
+
+                            <!-- Product Name -->
+                            <label>Product Name</label>
+                            <input type="text" name="name" placeholder="Enter product name" required>
+
+                            <br><br>
+
+                            <!-- Price -->
+                            <label>Price</label>
+                            <input type="number" name="price" placeholder="Enter price" required>
+
+                            <br><br>
+
+                            <!-- Category Select -->
+                            <label>Category</label>
+                            <select name="category" required>
+
+                                <option value="">Select Category</option>
+
+                                <% categories.forEach(category=> { %>
+
+                                    <option value="<%= category._id %>">
+                                        <%= category.title %>
+                                    </option>
+
+                                    <% }) %>
+
+                            </select>
+
+                            <br><br>
+
+                            <!-- Size -->
+                            <label>Sizes</label>
+
+                            <label><input type="checkbox" name="size" value="xs"> XS</label>
+                            <label><input type="checkbox" name="size" value="s"> S</label>
+                            <label><input type="checkbox" name="size" value="m"> M</label>
+                            <label><input type="checkbox" name="size" value="l"> L</label>
+                            <label><input type="checkbox" name="size" value="xl"> XL</label>
+                            <label><input type="checkbox" name="size" value="xxl"> XXL</label>
+
+                            <br><br>
+
+                            <!-- Description -->
+                            <label>Description</label>
+
+                            <textarea name="description" rows="4" placeholder="Enter product description"></textarea>
+
+                            <br><br>
+
+                            <!-- Images -->
+                            <label>Product Images</label>
+
+                            <input type="file" name="files" accept="image/*" multiple required>
+
+                            <br><br>
+
+                            <button type="submit">Create Product</button>
+
+                        </form>
+
+    </div>
+
+</body>
+
+</html>

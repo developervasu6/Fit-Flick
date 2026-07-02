@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Cart</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap");
+
+      :root {
+        --bg: #f0ede8;
+        --surface: #fff;
+        --ink: #1a1a1a;
+        --ink-muted: #888;
+        --accent: #c8a96e;
+        --radius: 14px;
+        --shadow: 0 8px 40px rgba(0,0,0,0.08);
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      body {
+        background: var(--bg);
+        font-family: 'DM Sans', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 40px 20px;
+      }
+
+      .cart-container {
+        width: 100%;
+        max-width: 480px;
+        background: var(--surface);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      /* HEADER */
+      .cart-header {
+        padding: 20px 24px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .cart-header h2 {
+        font-family: 'Syne', sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .cart-header .close-btn {
+        background: #f5f5f5;
+        border: none;
+        width: 32px; height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex; align-items: center; justify-content: center;
+        transition: 0.2s;
+      }
+      .cart-header .close-btn:hover { background: #ffe0e0; }
+
+      /* PROGRESS */
+      .progress-section {
+        padding: 16px 24px;
+        background: #fdf8f0;
+        border-bottom: 1px solid #eee;
+        font-size: 13px;
+        color: var(--ink-muted);
+      }
+
+      .progress-bar {
+        height: 5px;
+        background: #e8e0d5;
+        border-radius: 10px;
+        margin: 8px 0 6px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: var(--accent);
+        border-radius: 10px;
+        transition: width 0.4s ease;
+      }
+
+      .progress-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+      }
+
+      /* EMPTY STATE */
+      .empty-state {
+        padding: 60px 24px;
+        text-align: center;
+        color: var(--ink-muted);
+      }
+
+      .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+      .empty-state p { font-size: 15px; }
+      .empty-state a {
+        display: inline-block;
+        margin-top: 16px;
+        padding: 10px 24px;
+        background: var(--ink);
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-family: 'Syne', sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      /* ITEMS */
+      .cart-items { padding: 8px 0; }
+
+      .cart-item {
+        display: flex;
+        gap: 14px;
+        padding: 16px 24px;
+        border-bottom: 1px solid #f0f0f0;
+        position: relative;
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(6px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      .cart-item img {
+        width: 72px; height: 90px;
+        object-fit: cover;
+        border-radius: 10px;
+        background: #eee;
+        flex-shrink: 0;
+      }
+
+      .item-info { flex: 1; }
+
+      .item-name {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--ink);
+        padding-right: 24px;
+        line-height: 1.4;
+      }
+
+      .item-size {
+        display: inline-block;
+        margin-top: 4px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: #fdf8f0;
+        border-radius: 4px;
+        padding: 2px 8px;
+      }
+
+      .item-price {
+        font-family: 'Syne', sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        margin-top: 8px;
+        color: var(--ink);
+      }
+
+      .remove-btn {
+        position: absolute;
+        top: 14px; right: 20px;
+        background: none;
+        border: none;
+        font-size: 18px;
+        color: #ccc;
+        cursor: pointer;
+        transition: 0.2s;
+        line-height: 1;
+      }
+      .remove-btn:hover { color: #e05555; transform: scale(1.2); }
+
+      /* COUPON */
+      .coupon {
+        padding: 16px 24px;
+        border-top: 1px solid #eee;
+      }
+
+      .coupon-row {
+        display: flex;
+        gap: 8px;
+      }
+
+      .coupon-row input {
+        flex: 1;
+        padding: 10px 14px;
+        border: 1.5px solid #ddd;
+        border-radius: 8px;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 13px;
+        outline: none;
+        transition: 0.2s;
+      }
+      .coupon-row input:focus { border-color: var(--accent); }
+
+      .coupon-row button {
+        padding: 10px 16px;
+        background: var(--ink);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-family: 'Syne', sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .coupon-row button:hover { opacity: 0.85; }
+
+      .coupon-msg {
+        display: none;
+        margin-top: 8px;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .coupon-msg.success { background: #e8f5e9; color: #2e7d32; display: block; }
+      .coupon-msg.error   { background: #fdecea; color: #c62828; display: block; }
+
+      /* BOTTOM */
+      .bottom-bar {
+        padding: 20px 24px;
+        border-top: 1px solid #eee;
+        background: var(--surface);
+      }
+
+      .total-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 14px;
+      }
+
+      .total-label {
+        font-size: 13px;
+        color: var(--ink-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .total-amount {
+        font-family: 'Syne', sans-serif;
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--ink);
+      }
+
+      .checkout-btn {
+        width: 100%;
+        padding: 14px;
+        background: var(--ink);
+        color: white;
+        border: none;
+        border-radius: var(--radius);
+        font-family: 'Syne', sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s;
+        letter-spacing: 0.04em;
+      }
+      .checkout-btn:hover { opacity: 0.88; transform: translateY(-2px); }
+      .checkout-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    </style>
+  </head>
+
+  <body>
+    <div class="cart-container">
+
+      <!-- HEADER -->
+      <div class="cart-header">
+        <h2>Your Cart (<%= cartItems.length %> item<%= cartItems.length !== 1 ? 's' : '' %>)</h2>
+        <button class="close-btn" onclick="window.location.href='/'">✕</button>
+      </div>
+
+      <!-- PROGRESS -->
+      <div class="progress-section">
+        <span id="progressText">Loading...</span>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill" style="width:0%"></div>
+        </div>
+        <div class="progress-labels">
+          <span id="currentTotal">₹0</span>
+          <span>₹5,999 for 20% off</span>
+        </div>
+      </div>
+
+      <% if (cartItems.length === 0) { %>
+        <!-- EMPTY STATE -->
+        <div class="empty-state">
+          <div class="icon">🛍️</div>
+          <p>Your cart is empty</p>
+          <a href="/shop">Browse Products</a>
+        </div>
+      <% } else { %>
+
+        <!-- ITEMS -->
+        <div class="cart-items" id="cartItems">
+          <% cartItems.forEach((item) => { %>
+            <div class="cart-item" id="item-<%= item._id %>">
+              <img
+                src="<%= item.product.images[0]?.picURL || '' %>"
+                alt="<%= item.product.name %>"
+              />
+              <div class="item-info">
+                <div class="item-name"><%= item.product.name %></div>
+                <span class="item-size"><%= item.size.toUpperCase() %></span>
+                <div class="item-price">₹<%= item.product.price.toLocaleString('en-IN') %></div>
+              </div>
+              <button
+                class="remove-btn"
+                onclick="removeItem('<%= item._id %>', this)"
+                title="Remove"
+              >✕</button>
+            </div>
+          <% }) %>
+        </div>
+
+        <!-- COUPON -->
+        <div class="coupon">
+          <div class="coupon-row">
+            <input id="couponInput" placeholder="Enter coupon code" />
+            <button onclick="applyCoupon()">Apply</button>
+          </div>
+          <div class="coupon-msg" id="couponMsg"></div>
+        </div>
+
+        <!-- BOTTOM -->
+        <div class="bottom-bar">
+          <div class="total-row">
+            <span class="total-label">Estimated Total</span>
+            <span class="total-amount" id="totalAmount">₹0</span>
+          </div>
+          <button class="checkout-btn" id="checkoutBtn">
+            Place Order →
+          </button>
+        </div>
+
+      <% } %>
+    </div>
+
+    <script>
+      // ── Cart data from server ─────────────────────────────────────────
+      const cartData = <%- JSON.stringify(cartItems.map(item => ({
+        id: item._id,
+        productId: item.product._id,  
+        name: item.product.name,
+        price: item.product.price,
+        size: item.size,
+      }))) %>;
+
+      const THRESHOLD = 5999;
+      let discount = 0;
+
+      // ── Calculate & render totals ─────────────────────────────────────
+      function getTotal() {
+        return cartData.reduce((sum, item) => sum + item.price, 0);
+      }
+
+      function updateUI() {
+        const raw = getTotal();
+        const final = Math.round(raw - raw * discount);
+        const pct = Math.min((raw / THRESHOLD) * 100, 100);
+
+        const fmt = (n) => '₹' + n.toLocaleString('en-IN');
+
+        document.getElementById('totalAmount').textContent = fmt(final);
+        document.getElementById('currentTotal').textContent = fmt(raw);
+        document.getElementById('progressFill').style.width = pct + '%';
+
+        if (raw >= THRESHOLD) {
+          document.getElementById('progressText').textContent = '🎉 20% off unlocked!';
+        } else {
+          const remaining = THRESHOLD - raw;
+          document.getElementById('progressText').textContent =
+            `Add ${fmt(remaining)} more to unlock 20% off!`;
+        }
+      }
+
+      updateUI();
+
+      // ── Remove item ───────────────────────────────────────────────────
+      async function removeItem(cartItemId, btn) {
+        try {
+          const res = await fetch(`/api/shop/cart/remove/${cartItemId}`, {
+            method: 'DELETE',
+            credentials: 'include',
+          });
+
+          if (!res.ok) throw new Error('Failed');
+
+          // Remove from DOM
+          document.getElementById(`item-${cartItemId}`).remove();
+
+          // Remove from local data
+          const idx = cartData.findIndex(i => i.id == cartItemId);
+          if (idx !== -1) cartData.splice(idx, 1);
+
+          updateUI();
+
+          // Update header count
+          const header = document.querySelector('.cart-header h2');
+          const count = cartData.length;
+          header.textContent = `Your Cart (${count} item${count !== 1 ? 's' : ''})`;
+
+          if (count === 0) {
+            document.querySelector('.cart-items').innerHTML =
+              '<div class="empty-state"><div class="icon">🛍️</div><p>Your cart is empty</p><a href="/shop">Browse Products</a></div>';
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      // ── Place Order (Cart) ─────────────────────────────
+      document.getElementById("checkoutBtn")?.addEventListener("click", async () => {
+      if (cartData.length === 0) return;
+
+      const btn = document.getElementById("checkoutBtn");
+      btn.disabled = true;
+      btn.textContent = "Processing...";
+
+      try {
+
+        const cartItems = cartData.map(item => ({
+          productId: item.productId,   // ← now correctly the product's _id
+          size: item.size,
+          quantity: 1
+        }));
+        
+        const res = await fetch("/api/shop/order/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          credentials: "include",
+          body: JSON.stringify({ cartItems })   // ✅ MATCHES BACKEND
+        });
+
+        if (res.status === 401) {
+          window.location.href = "/login";
+          return;
+        }
+
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.message || "Order failed");
+
+        window.location.href = `/order/${data.orderId}`;
+
+      } catch (err) {
+        console.error(err);
+        alert(err.message || "Could not place order");
+        btn.disabled = false;
+        btn.textContent = "Place Order →";
+      }
+    });
+
+      // ── Coupon ────────────────────────────────────────────────────────
+      const VALID_COUPON = 'LOVE20';
+
+      document.getElementById('couponInput')?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') applyCoupon();
+      });
+
+      function applyCoupon() {
+        const val = document.getElementById('couponInput').value.trim().toUpperCase();
+        const msg = document.getElementById('couponMsg');
+
+        if (val === VALID_COUPON) {
+          discount = 0.2;
+          msg.className = 'coupon-msg success';
+          msg.textContent = '🎉 Coupon applied! 20% off';
+          document.querySelector('.coupon-row').style.display = 'none';
+        } else {
+          msg.className = 'coupon-msg error';
+          msg.textContent = '❌ Invalid coupon code';
+        }
+        updateUI();
+      }
+    </script>
+  </body>
+</html>
